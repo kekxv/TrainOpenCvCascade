@@ -3,8 +3,7 @@
 ## 操作说明
 
 1. 进入 `tools` 目录，编译 `tools` 工具
-
-``` shell
+```shell
 cd tools
 mkdir build
 cd build
@@ -13,8 +12,7 @@ make -j2
 ```
 
 2. 回到根目录，创建正负样本文件夹
-
-``` shell
+```shell
 # negdata 负样本位置
 # posdata 正样本位置
 mkdir negdata posdata
@@ -26,7 +24,7 @@ mkdir xml
 ```
 
 4. 开始训练
-``` shell
+```shell
 sh train.sh
 ```
 
