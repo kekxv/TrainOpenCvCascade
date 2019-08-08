@@ -11,20 +11,12 @@ cmake ..
 make -j2
 ```
 
-2. 回到根目录，创建正负样本文件夹
+2. 开始训练
 ```shell
-# negdata 负样本位置
-# posdata 正样本位置
-mkdir negdata posdata
+sh train.sh 样本目录 训练目录
 ```
 
-3. 创建保存分类器模型位置
-```shell
-mkdir xml
-```
+样本目录为需要训练的数据目录，目录需要：`posdata` 正样本数据；`negdata` 负样本数据。
 
-4. 开始训练
-```shell
-sh train.sh
-```
+训练目录为训练数据输出目录，默认为 `train` 目录；可以自己指定。
 

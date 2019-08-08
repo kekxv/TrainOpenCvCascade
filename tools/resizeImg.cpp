@@ -41,7 +41,7 @@ bool GetFileList(const string &basePath, vector<string> &pathList) {
 
 int main(int argc,char *argv[]){
     string file;
-    string path;
+    string path,Path;
     string savePath;
     string saveInfoPath;
     int width=0;
@@ -49,12 +49,15 @@ int main(int argc,char *argv[]){
     char ch;
     bool sortFlag = false;
 
-    while((ch = getopt(argc, argv, "p:f:w:h:so:O:")) != EOF)
+    while((ch = getopt(argc, argv, "P:p:f:w:h:so:O:")) != EOF)
     {
         switch(ch)
         {
             case 'f':
                 file = optarg;
+                break;
+            case 'P':
+                Path = optarg;
                 break;
             case 'p':
                 path = optarg;
@@ -75,7 +78,7 @@ int main(int argc,char *argv[]){
                 sortFlag = true;
                 break;
             default:
-                printf("请传入参数：-p 文件夹 -f 文件 -w 宽度 -h 高度 -s 排序 -o 输出文件");
+                printf("请传入参数：-p 文件夹 -P 另存文件夹 -f 文件 -w 宽度 -h 高度 -s 排序 -o 输出文件 -O 信息文件");
                 return 1;
         }
     }
@@ -99,7 +102,8 @@ int main(int argc,char *argv[]){
             Mat img = imread(f);
             resize(img,img,Size(width,height));
             if(sortFlag){
-                remove(f.c_str());
+                if(Path.empty())
+                    remove(f.c_str());
                 imgList.push_back(img);
             }else{
                 imwrite(f,img);
@@ -116,7 +120,10 @@ int main(int argc,char *argv[]){
                 char _path[256 * 4];
                 memset(_path,0x00,sizeof(_path));
                 //string newF = path + "/" + to_string(j) + ex;
-                sprintf(_path,"%s/%04ld%s",path.c_str(),j,ex.c_str());
+                if(Path.empty())
+                    sprintf(_path,"%s/%04ld%s",path.c_str(),j,ex.c_str());
+                else
+                    sprintf(_path,"%s/%04ld%s",Path.c_str(),j,ex.c_str());
                 bool flag = imwrite(_path,img);
                 if(!savePath.empty())
                     putData(savePath,string(_path) + " 1 0 0 "+to_string(width)+" "+to_string(height)+"\r\n");
